@@ -1,4 +1,4 @@
-# DeleteThat_RPHPlugin
+# DeleteThatEntity - *RPH Plugin*
 
 ## Usage
 - Aim a weapon at an entity, then press `Delete`.  
