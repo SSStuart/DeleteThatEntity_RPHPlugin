@@ -1,5 +1,7 @@
 ﻿# DeleteThatEntity - *RPH Plugin*
 
+RAGE Plugin Hook Plugin allowing to delete most entities from the GTA 5 map.
+
 ## Usage
 - Aim a weapon at an entity, then press `Delete`.  
   The selected entity should become partially transparent.
