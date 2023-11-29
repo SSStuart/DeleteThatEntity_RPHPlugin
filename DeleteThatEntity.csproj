@@ -7,8 +7,8 @@
     <ProjectGuid>{93C9F00A-317A-4D72-BA56-440CC1C72979}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DeleteThatEntity_RPHPlugin</RootNamespace>
-    <AssemblyName>DeleteThatEntity_RPHPlugin</AssemblyName>
+    <RootNamespace>DeleteThatEntity</RootNamespace>
+    <AssemblyName>DeleteThatEntity</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
