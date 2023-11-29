@@ -20,7 +20,7 @@ namespace DeleteThatEntityPlugin
                 {
                     GameFiber.Yield();
 
-                    // If the player is aimaing and the delete key is pressed, mark the entity for deletion
+                    // If the player is aiming and the Delete key is pressed, mark the entity for deletion
                     if (!entityMarked && Game.IsKeyDown(System.Windows.Forms.Keys.Delete) && Game.LocalPlayer.IsFreeAiming)
                     {
                         selectedEntity = Game.LocalPlayer.GetFreeAimingTarget();
@@ -41,12 +41,13 @@ namespace DeleteThatEntityPlugin
                             GameFiber.Yield();
                     }
 
-                    // If the entity is marked for deletion and the delete key is pressed, try deleting the entity
+                    // If the entity is marked for deletion and the Delete key is pressed again, try deleting the entity
                     if (entityMarked && Game.IsKeyDown(System.Windows.Forms.Keys.Delete))
                     {
                         if (selectedEntity.Exists())
                         {
                             selectedEntity.Delete();
+                            // If the entity still exist, show a message saying that the deletion as failed
                             if (selectedEntity.Exists())
                             {
                                 Game.DisplaySubtitle("~o~Unable to delete this entity", 1000);
