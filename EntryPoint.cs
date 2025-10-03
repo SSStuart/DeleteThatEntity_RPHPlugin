@@ -14,12 +14,7 @@ namespace DeleteThatEntityPlugin
         {
             Game.LogTrivial($"{pluginName} Plugin v{pluginVersion} has been loaded.");
 
-            // Check for updates
-            bool updateAvailable = false;
-            System.Threading.Tasks.Task.Run(async () =>
-            {
-                updateAvailable = await UpdateChecker.CheckUpdate();
-            });
+            UpdateChecker.CheckForUpdates();
 
             GameFiber.StartNew(delegate
             {
@@ -29,12 +24,6 @@ namespace DeleteThatEntityPlugin
                 while (true)
                 {
                     GameFiber.Yield();
-
-                    if (updateAvailable)
-                    {
-                        UpdateChecker.DisplayUpdateNotification();
-                        updateAvailable = false;
-                    }
 
                     // If the player is aiming and the Delete key is pressed, mark the entity for deletion
                     if (!entityMarked && Game.IsKeyDown(System.Windows.Forms.Keys.Delete) && Game.LocalPlayer.IsFreeAiming)
