@@ -1,4 +1,5 @@
-﻿using Rage;
+﻿using DeleteThatEntity;
+using Rage;
 using System.Reflection;
 
 [assembly: Rage.Attributes.Plugin("DeleteThatEntity", Description = "A simple plugin allowing to remove most entity from the world.", Author = "SSStuart", PrefersSingleInstance = true, SupportUrl = "https://ssstuart.net/discord")]
@@ -10,6 +11,8 @@ namespace DeleteThatEntityPlugin
     {
         public static string pluginName = "DeleteThatEntity";
         public static string pluginVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        public static Localization l10n = new Localization();
+
         public static void Main()
         {
             Game.LogTrivial($"{pluginName} plugin v{pluginVersion} has been loaded.");
@@ -34,12 +37,12 @@ namespace DeleteThatEntityPlugin
                             selectedEntity.Opacity = 0.5f;
                             entityMarked = true;
 
-                            Game.DisplaySubtitle($"Entity ~b~{selectedEntity.Model.Name} ~w~selected");
-                            Game.DisplayHelp("Press ~y~Delete~w~ to delete this entity, or ~y~Enter~w~ to cancel");
+                            Game.DisplaySubtitle(l10n.GetString("entitySelected", ("selectedEntity", selectedEntity.Model.Name)));
+                            Game.DisplayHelp(l10n.GetString("selectionConfirmation"));
                             Game.LogTrivial($"Entity marked for deletion: {selectedEntity.Model.Name}");
                         }
                         else
-                            Game.DisplaySubtitle("~o~Nothing found", 1000);
+                            Game.DisplaySubtitle(l10n.GetString("nothingFound"), 1000);
 
                         // Waiting for the key to be released
                         while (Game.IsKeyDown(System.Windows.Forms.Keys.Delete))
@@ -55,13 +58,13 @@ namespace DeleteThatEntityPlugin
                         // If the entity still exist, show a message saying that the deletion as failed
                         if (selectedEntity.Exists())
                         {
-                            Game.DisplaySubtitle("~o~Unable to delete this entity", 1000);
+                            Game.DisplaySubtitle(l10n.GetString("unableToDelete"), 1000);
                             selectedEntity.Opacity = 1f;
                             Game.LogTrivial($"Unable to delete entity: {selectedEntity.Model.Name}");
                         }
                         else
                         {
-                            Game.DisplaySubtitle("~g~Entity deleted", 1000);
+                            Game.DisplaySubtitle(l10n.GetString("entityDeleted"), 1000);
                             Game.LogTrivial($"Entity deleted");
                             }
                         }
