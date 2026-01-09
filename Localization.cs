@@ -13,7 +13,8 @@ namespace DeleteThatEntity
                 new Dictionary<string, string>{ 
                     { "updateAvailable", "~y~Update available!" },
                     { "entitySelected", "Entity ~b~:selectedEntity~w~ selected." },
-                    { "selectionConfirmation", "Press ~y~Delete~w~/~INPUT_SPRINT~ to delete this entity, or ~y~Enter~w~/~INPUT_RELOAD~ to cancel" },
+                    { "selectionConfirmation", "Press ~y~Delete~w~ to delete this entity, or ~y~Enter~w~ to cancel" },
+                    { "selectionConfirmationController", "Press ~y~Delete~w~/~INPUT_SPRINT~ to delete this entity, or ~y~Enter~w~/~INPUT_RELOAD~ to cancel" },
                     { "nothingFound", "~o~Nothing found" },
                     { "unableToDelete", "~o~Unable to delete this entity" },
                     { "entityDeleted", "~g~Entity deleted" }
@@ -23,7 +24,8 @@ namespace DeleteThatEntity
                 new Dictionary<string, string>{
                     { "updateAvailable", "~y~Mise à jour disponible !" },
                     { "entitySelected", "Entité ~b~:selectedEntity~w~ sélectionnée." },
-                    { "selectionConfirmation", "Appuyez sur ~y~Suppr~w~/~INPUT_SPRINT~ pour confirmer, ou ~y~Entrer~w~/~INPUT_RELOAD~ pour annuler" },
+                    { "selectionConfirmation", "Appuyez sur ~y~Suppr~w~ pour confirmer, ou ~y~Entrer~w~ pour annuler" },
+                    { "selectionConfirmationController", "Appuyez sur ~y~Suppr~w~/~INPUT_SPRINT~ pour confirmer, ou ~y~Entrer~w~/~INPUT_RELOAD~ pour annuler" },
                     { "nothingFound", "~o~Aucune entité trouvée" },
                     { "unableToDelete", "~o~Impossible de supprimer cette entité" },
                     { "entityDeleted", "~g~Entité supprimée" },

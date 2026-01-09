@@ -38,7 +38,7 @@ namespace DeleteThatEntityPlugin
                             selectedEntity.Opacity = 0.5f;
                             entityMarked = true;
 
-                            Game.DisplayHelp(l10n.GetString("entitySelected", ("selectedEntity", selectedEntity.Model.Name)) +"~n~"+ l10n.GetString("selectionConfirmation"));
+                            Game.DisplayHelp(l10n.GetString("entitySelected", ("selectedEntity", selectedEntity.Model.Name)) +"~n~"+ l10n.GetString(!Game.IsControllerButtonDownRightNow(ControllerButtons.A) ? "selectionConfirmation" : "selectionConfirmationController"));
                             Game.LogTrivial($"Entity marked for deletion: {selectedEntity.Model.Name}");
                         }
                         else
