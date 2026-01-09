@@ -13,6 +13,9 @@ namespace DeleteThatEntityPlugin
         public static string pluginVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
         public static Localization l10n = new Localization();
 
+        private static bool entityMarked = false;
+        private static Entity selectedEntity = null;
+
         public static void Main()
         {
             Game.LogTrivial($"{pluginName} plugin v{pluginVersion} has been loaded.");
@@ -21,15 +24,13 @@ namespace DeleteThatEntityPlugin
 
             GameFiber.StartNew(delegate
             {
-                bool entityMarked = false;
-                Entity selectedEntity = null;
-
+                
                 while (true)
                 {
                     GameFiber.Yield();
 
                     // If the player is aiming and the Delete key is pressed, mark the entity for deletion
-                    if (!entityMarked && Game.IsKeyDown(System.Windows.Forms.Keys.Delete) && Game.LocalPlayer.IsFreeAiming)
+                    if (!entityMarked && ((Game.IsKeyDown(System.Windows.Forms.Keys.Delete) && Game.LocalPlayer.IsFreeAiming) || Game.IsControllerButtonDown(ControllerButtons.A)))
                     {
                         selectedEntity = Game.LocalPlayer.GetFreeAimingTarget();
                         if (selectedEntity != null && selectedEntity.IsValid())
@@ -37,24 +38,24 @@ namespace DeleteThatEntityPlugin
                             selectedEntity.Opacity = 0.5f;
                             entityMarked = true;
 
-                            Game.DisplaySubtitle(l10n.GetString("entitySelected", ("selectedEntity", selectedEntity.Model.Name)));
-                            Game.DisplayHelp(l10n.GetString("selectionConfirmation"));
+                            Game.DisplayHelp(l10n.GetString("entitySelected", ("selectedEntity", selectedEntity.Model.Name)) +"~n~"+ l10n.GetString("selectionConfirmation"));
                             Game.LogTrivial($"Entity marked for deletion: {selectedEntity.Model.Name}");
                         }
                         else
                             Game.DisplaySubtitle(l10n.GetString("nothingFound"), 1000);
 
                         // Waiting for the key to be released
-                        while (Game.IsKeyDown(System.Windows.Forms.Keys.Delete))
+                        while ((Game.IsKeyDown(System.Windows.Forms.Keys.Delete) || Game.IsControllerButtonDownRightNow(ControllerButtons.A)))
                             GameFiber.Yield();
                     }
 
                     // If the entity is marked for deletion and the Delete key is pressed again, try deleting the entity
-                    if (entityMarked && Game.IsKeyDown(System.Windows.Forms.Keys.Delete))
+                    if (entityMarked && (Game.IsKeyDown(System.Windows.Forms.Keys.Delete) || Game.IsControllerButtonDown(ControllerButtons.A)))
                     {
                         if (selectedEntity.Exists())
                         {
                             selectedEntity.Delete();
+                            Game.HideHelp();
                         // If the entity still exist, show a message saying that the deletion as failed
                         if (selectedEntity.Exists())
                         {
@@ -74,14 +75,23 @@ namespace DeleteThatEntityPlugin
                     }
 
                     // If the entity is marked for deletion and the enter key is pressed, cancel the deletion
-                    if (entityMarked && Game.IsKeyDown(System.Windows.Forms.Keys.Enter))
+                    if (entityMarked && (Game.IsKeyDown(System.Windows.Forms.Keys.Enter) || Game.IsControllerButtonDown(ControllerButtons.B)))
                     {
                         entityMarked = false;
                         selectedEntity.Opacity = 1f;
+                        Game.HideHelp();
                         Game.LogTrivial($"Entity deletion canceled for: {selectedEntity.Model.Name}");
                     }
                 }
             });
+        }
+
+        private static void OnUnload(bool variable)
+        {
+            Game.LogTrivial("Unloading...");
+            if (entityMarked || selectedEntity.Exists())
+                selectedEntity.Opacity = 1f;
+            Game.LogTrivial("Unloaded");
         }
     }
 }
